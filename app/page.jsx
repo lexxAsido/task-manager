@@ -86,18 +86,15 @@ export default function Home() {
   };
 
   return (
-    <section>
+    <section className="bg-gray-100">
       <div className="bg-black text-white py-5 ">
         <p className="animate-marquee">
           This is a simple task Manager is created by Asido Alexandar
 
         </p>
       </div>
-      <div className="flex justify-center items-center border border-red-500 h-screen">
-
-        <div className="max-w-lg mx-auto p-6 bg-green-100 rounded-lg shadow-md mt-10 shawdow-lg">
-          <h1 className="text-2xl font-bold text-center mb-4">Task Manager</h1>
-          <div className="flex mb-4">
+      <div className="flex-col justify-center items-center border border-red-500 h-screen">
+      {/* <div className="flex mb-4">
             <input
               type="text"
               value={newTask}
@@ -105,14 +102,22 @@ export default function Home() {
               placeholder="Add new task for this week"
               className="flex-1 p-2 border rounded-l-md"
             />
+              </div> */}
+              <div>
+              
             <button
               onClick={addTask}
               className="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600"
               disabled={loading}
-            >
+              >
               <IoAddCircle className="text-3xl"/>
             </button>
-          </div>
+              </div>
+
+
+        <div className="w-[50rem] mx-auto p-6 bg-white rounded-lg shadow-md mt-10 shawdow-lg">
+          <h1 className="text-2xl font-bold text-center mb-4">Task Manager</h1>
+          
           {loading && <p className="text-center flex justify-center "><AiOutlineLoading3Quarters className="animate-spin text-4xl my-14"/></p>}
           <ul>
             {tasks.map(task => (

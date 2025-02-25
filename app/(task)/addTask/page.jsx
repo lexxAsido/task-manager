@@ -44,7 +44,7 @@ const AddTask = ({ tasks, setTasks }) => {
 
   return (
     <section>
-        <Link href="/">
+    <Link href="/">
             Home
         </Link>
     <div className="flex justify-center items-center min-h-screen bg-gray-100 w-full">

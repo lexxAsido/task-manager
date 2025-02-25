@@ -4,15 +4,9 @@ import { useState, useEffect } from 'react';
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { IoAddCircle } from "react-icons/io5";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import Link from "next/link";
 
-// export default function Home() {
-//   return (
-//     <section>
-//           <div>Task Manager</div>
-//     </section>
 
-//   );
-// }
 
 const API_URL = 'https://jsonplaceholder.typicode.com/todos';
 
@@ -38,25 +32,7 @@ export default function Home() {
     }
   };
 
-  const addTask = async () => {
-    if (!newTask.trim()) return;
-    setLoading(true);
-    try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: newTask, completed: false }),
-      });
-      const data = await res.json();
-      setTasks([data, ...tasks]);
-      setNewTask('');
-    } catch (error) {
-      console.error('Error adding task:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+ 
   const markCompleted = async (id) => {
     setLoading(true);
     try {
@@ -93,29 +69,23 @@ export default function Home() {
 
         </p>
       </div>
-      <div className="flex-col justify-center items-center border border-red-500 h-screen">
-      {/* <div className="flex mb-4">
-            <input
-              type="text"
-              value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
-              placeholder="Add new task for this week"
-              className="flex-1 p-2 border rounded-l-md"
-            />
-              </div> */}
-              <div>
-              
-            <button
-              onClick={addTask}
-              className="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600"
-              disabled={loading}
-              >
-              <IoAddCircle className="text-3xl"/>
-            </button>
-              </div>
 
 
-        <div className="w-[50rem] mx-auto p-6 bg-white rounded-lg shadow-md mt-10 shawdow-lg">
+      <div className="flex-col justify-start items-center border h-screen relative mt-32">
+      
+           
+      <div>
+      <Link
+        href="/addTask" 
+        className="flex items-center justify-start absolute left-96 bg-blue-700 rounded-lg text-white p-2"
+      >
+        <IoAddCircle className="text-3xl" />
+        <p>Add new task</p>
+      </Link>
+    </div>
+
+
+        <div className="w-[70rem] mx-auto p-6 bg-white rounded-lg shadow-md mt-10 shawdow-lg">
           <h1 className="text-2xl font-bold text-center mb-4">Task Manager</h1>
           
           {loading && <p className="text-center flex justify-center "><AiOutlineLoading3Quarters className="animate-spin text-4xl my-14"/></p>}

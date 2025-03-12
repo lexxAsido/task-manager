@@ -1,10 +1,10 @@
 "use client";
-import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import { IoAddCircle } from "react-icons/io5";
+import { IoMdAdd } from "react-icons/io";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import Link from "next/link";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const API_URL = "https://jsonplaceholder.typicode.com/todos";
 
@@ -61,43 +61,63 @@ export default function Home() {
     }
   };
 
+  const getPriorityClass = (priority) => {
+    switch (priority) {
+      case "Urgent":
+        return "bg-red-500";
+      case "High":
+        return "bg-orange-500";
+      case "Medium":
+        return "bg-blue-500";
+      case "Low":
+      default:
+        return "bg-green-500";
+    }
+  };
+
   return (
-    <section className="bg-gray-100 min-h-screen p-4 max-md:w-aut max-md:h-auto">
-    
+    <section className="bg-gray-100 min-h-screen p-4">
       <div className="bg-black text-white py-3 text-center">
         <p className="animate-marquee">
           This Task Manager is created by Asido Alexandar
         </p>
       </div>
 
-      
       <div className="flex flex-col items-center mt-10">
-    
-        <Link
-          href="/addTask"
-          className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition mb-6"
-        >
-          <IoAddCircle className="text-2xl" />
-          <p className="text-sm font-semibold">Add New Task</p>
-        </Link>
+        <div className="flex w-full items-center">
+          <Link
+            href="/addTask"
+            className="flex items-center space-x-1 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition ml-60"
+          >
+            <IoMdAdd className="text-2xl" />
+            <p className="text-sm font-semibold">Add New Task</p>
+          </Link>
+        </div>
+        <div className="w-full border mt-2 flex items-center gap-5 py-3">
+          <h2 className="ml-60">All Tasks</h2>
+          <MdKeyboardArrowDown />
+        </div>
 
-        
-        <div className="w-full max-w-lg md:max-w-2xl lg:max-w-4xl p-6 bg-white rounded-lg shadow-lg">
-          <h1 className="text-2xl font-bold text-center mb-6">Task Manager</h1>
+        <div className="w-full md:w-[89rem] p-6 bg-white rounded-lg shadow-lg">
+          <div className="flex justify-between p-3 border-b-2 mb-3 border-gray-200">
+            <h1 className="text-xl font-semibold">Task</h1>
+            <div className="flex justify-evenly w-[46rem]">
+              <h2 className="text-xl font-semibold">Status</h2>
+              <h2 className="text-xl font-semibold">Priority</h2>
+            </div>
+          </div>
 
-          
           {loading && (
             <p className="text-center flex justify-center">
               <AiOutlineLoading3Quarters className="animate-spin text-4xl my-4 text-gray-600" />
             </p>
           )}
 
-      
-          <ul className="space-y-4">
+          <ul className="space-y-2">
             {tasks.map((task) => (
               <li
                 key={task.id}
-                className="flex justify-between items-center bg-gray-50 md:p-4 rounded-md shadow-sm border hover:shadow-md transition max-md:w-auto max-md:h-auto"
+                className="flex justify-between items-center bg-gray-50 md:p-4 rounded-md shadow-sm transition"
               >
                 <span
                   className={`text-lg ${
@@ -106,16 +126,23 @@ export default function Home() {
                 >
                   {task.title}
                 </span>
-                <div className="flex space-x-2">
-                  {!task.completed && (
-                    <button
-                      onClick={() => markCompleted(task.id)}
-                      className="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-green-600 transition text-sm"
-                      disabled={loading}
-                    >
-                      Complete
-                    </button>
-                  )}
+
+                <div className="flex items-center justify-between w-[40%] min-w-[15rem] ">
+
+                  <span
+                    className={`px-3 py-1 text-white rounded-md ${
+                      task.completed ? "bg-gray-500" : "bg-yellow-500"
+                    }`}
+                  >
+                    {task.completed ? "Completed" : "Pending"}
+                  </span>
+                  <span
+                    className={`px-3 py-1 text-white rounded-md ${getPriorityClass(
+                      task.priority || "Low"
+                    )}`}
+                  >
+                    {task.priority || "High"}
+                  </span>
                   <button
                     onClick={() => deleteTask(task.id)}
                     className="p-2 rounded-md hover:scale-110 transition"
